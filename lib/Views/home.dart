@@ -57,7 +57,7 @@ class Home extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: ListView.builder(
                   physics: const BouncingScrollPhysics(),
-                  itemCount: 100,
+                  itemCount: 20,
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
                         margin: const EdgeInsets.only(bottom: 4),
@@ -73,11 +73,9 @@ class Home extends StatelessWidget {
                             "${snapshot.data![index].artist}",
                             style: ourStyle(family: regular, size: 12),
                           ),
-                          leading: const Icon(
-                            Icons.music_note,
-                            color: whitecolor,
-                            size: 32,
-                          ),
+                          leading: QueryArtworkWidget(
+                              id: snapshot.data![index].id,
+                              type: ArtworkType.AUDIO),
                           trailing: const Icon(
                             Icons.play_arrow,
                             color: whitecolor,
