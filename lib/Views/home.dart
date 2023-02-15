@@ -1,5 +1,6 @@
 import 'package:audio_adventure/Consts/colors.dart';
 import 'package:audio_adventure/Controller/player_controller.dart';
+import 'package:audio_adventure/Views/player.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -57,29 +58,49 @@ class Home extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: ListView.builder(
                   physics: const BouncingScrollPhysics(),
-                  itemCount: 20,
+                  itemCount: snapshot.data!.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
                         margin: const EdgeInsets.only(bottom: 4),
-                        child: ListTile(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12)),
-                          tileColor: bgcolor,
-                          title: Text(
-                            snapshot.data![index].displayNameWOExt,
-                            style: ourStyle(family: bold, size: 14),
-                          ),
-                          subtitle: Text(
-                            "${snapshot.data![index].artist}",
-                            style: ourStyle(family: regular, size: 12),
-                          ),
-                          leading: QueryArtworkWidget(
+                        child: Obx(
+                          () => ListTile(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12)),
+                            tileColor: bgcolor,
+                            title: Text(
+                              snapshot.data![index].displayNameWOExt,
+                              style: ourStyle(family: bold, size: 14),
+                            ),
+                            subtitle: Text(
+                              "${snapshot.data![index].artist}",
+                              style: ourStyle(family: regular, size: 12),
+                            ),
+                            leading: QueryArtworkWidget(
                               id: snapshot.data![index].id,
-                              type: ArtworkType.AUDIO),
-                          trailing: const Icon(
-                            Icons.play_arrow,
-                            color: whitecolor,
-                            size: 26,
+                              type: ArtworkType.AUDIO,
+                              nullArtworkWidget: const Icon(
+                                Icons.music_note,
+                                color: whitecolor,
+                                size: 32,
+                              ),
+                            ),
+                            trailing: controller.playIndex.value == index &&
+                                    controller.isPlaying.value
+                                ? const Icon(
+                                    Icons.play_arrow,
+                                    color: whitecolor,
+                                    size: 26,
+                                  )
+                                : null,
+                            onTap: () {
+                              Get.to(
+                                  () => Player(
+                                        data: snapshot.data!,
+                                      ),
+                                  transition: Transition.downToUp);
+                              controller.playSong(
+                                  snapshot.data![index].uri, index);
+                            },
                           ),
                         ));
                   },
