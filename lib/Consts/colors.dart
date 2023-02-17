@@ -38,3 +38,5 @@ gbg() {
       begin: Alignment.topRight,
       end: Alignment.bottomLeft);
 }
+
+const logo = "assets/images/music logo design.png";

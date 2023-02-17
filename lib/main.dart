@@ -1,4 +1,4 @@
-import 'package:audio_adventure/Views/home.dart';
+import 'package:audio_adventure/Views/splashscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const Home(),
+      home: const SplashScreen(),
       title: 'Audio Adventure',
       theme: ThemeData(
         fontFamily: "Regular",
